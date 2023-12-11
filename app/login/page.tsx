@@ -1,42 +1,54 @@
+// Import necessary modules from Next.js for linking, headers, and navigation.
 import Link from 'next/link'
 import { headers, cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/app/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
+// The main function for the login page that accepts 'searchParams' from the URL query.
 export default function Login({
   searchParams,
 }: {
   searchParams: { message: string }
 }) {
+  // This function is called when the user submits the sign-in form.
   const signIn = async (formData: FormData) => {
-    'use server'
+    'use server'  // Tells Next.js to run this code on the server.
 
+    // Extract the email and password from the form data.
     const email = formData.get('email') as string
     const password = formData.get('password') as string
+    // Retrieve the cookie store from the headers.
     const cookieStore = cookies()
+    // Create a Supabase client to interact with Supabase services.
     const supabase = createClient(cookieStore)
 
+    // Attempt to sign in the user with the provided email and password.
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
+    // If there's an error, redirect back to the login page with an error message.
     if (error) {
       return redirect('/login?message=Could not authenticate user')
     }
 
+    // If sign-in is successful, redirect the user to the homepage.
     return redirect('/')
   }
 
+  // This function is called when the user submits the sign-up form.
   const signUp = async (formData: FormData) => {
-    'use server'
+    'use server'  // Again, this ensures the code runs on the server.
 
+    // Get the origin of the request from the headers to construct a callback URL.
     const origin = headers().get('origin')
     const email = formData.get('email') as string
     const password = formData.get('password') as string
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
+    // Attempt to sign up the user with the provided email and password.
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -45,10 +57,12 @@ export default function Login({
       },
     })
 
+    // If there's an error, redirect back to the login page with an error message.
     if (error) {
       return redirect('/login?message=Could not authenticate user')
     }
 
+    // If sign-up is successful, instruct the user to check their email to continue.
     return redirect('/login?message=Check email to continue sign in process')
   }
 

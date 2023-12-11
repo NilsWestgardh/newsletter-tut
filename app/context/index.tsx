@@ -2,10 +2,11 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User } from '../types';
-import { error } from 'console';
+import { createClient } from '@/app/utils/supabase/client';
 
 interface IAppContext {
     user: User | undefined;
+    supabase: any; // Update to SupabaseClient
 };
 
 const AppContext = createContext<IAppContext | undefined>(undefined);
@@ -13,6 +14,8 @@ const AppContext = createContext<IAppContext | undefined>(undefined);
 export function AppWrapper({ children }: {
     children: React.ReactNode;
 }) {
+    const supabase = createClient();
+
     const [user, setUser] = useState<User | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(false); // Change to true when using Supabase
 
@@ -22,9 +25,9 @@ export function AppWrapper({ children }: {
                 setLoading(true);
                 // Supabase fetch current user
                 
-            } catch (error) {
+            } catch (e) {
                 // Handle error
-                console.log(error);
+                console.log(e);
             } finally {
                 setLoading(false);
             }
@@ -41,7 +44,8 @@ export function AppWrapper({ children }: {
 
     return (
         <AppContext.Provider value={{
-            user
+            user,
+            supabase
         }}>
             {children}
         </AppContext.Provider>
