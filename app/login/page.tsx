@@ -34,7 +34,7 @@ export default function Login({
     }
 
     // If sign-in is successful, redirect the user to the homepage.
-    return redirect('/')
+    return redirect('/subscribe')
   }
 
   // This function is called when the user submits the sign-up form.

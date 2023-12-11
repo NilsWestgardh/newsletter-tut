@@ -26,4 +26,16 @@
     input[type="text"] {
         @apply item px-3 py-2 text-gray-500;
     }
+
+    .notification {
+        @apply bg-gray-100 text-gray-800 border-gray-800 rounded-lg px-4 py-2;
+
+        &.success {
+            @apply bg-green-100 text-green-800 border-green-800;
+        }
+
+        &.error {
+            @apply bg-red-100 text-red-800 border-red-800;
+        }
+    }
 }
