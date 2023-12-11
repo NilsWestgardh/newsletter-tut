@@ -7,11 +7,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        btn: {
-          background: 'hsl(var(--btn-background))',
-          'background-hover': 'hsl(var(--btn-background-hover))',
+        primary: {
+          '50': '#eef1ff',
+          '100': '#e0e5ff',
+          '200': '#c7cffe',
+          '300': '#a6affb',
+          '400': '#8286f7',
+          '500': '#6964f0',
+          '600': '#5947e4',
+          '700': '#4c39c9',
+          '800': '#3f31a2',
+          '900': '#362f80',
+          '950': '#171334',
         },
       },
     },
