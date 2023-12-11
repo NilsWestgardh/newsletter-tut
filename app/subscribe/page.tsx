@@ -3,13 +3,38 @@
 import { isValidEmail } from "../lib/utils";
 import { useState } from "react";
 import Image from "next/image";
+import { useAppContext } from "../context";
 
 export default function Home() {
+  const { supabase } = useAppContext();
   const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<any>(undefined);
 
-  const subscribeToNewsletter = () => {
+  const subscribeToNewsletter = async () => {
     if (!isValidEmail(email)) return alert(`Please enter a valid email address.`);
-    // All the operations
+    
+    try {
+      setLoading(true);
+
+      const { data, error } = await supabase
+        .from('subscribers')
+        .insert([{ email, owner_id: '40cd69a9-c719-4d7a-b821-c740fcd0fef2' }]) // Update owner_id to your user id
+        .select();
+
+        if (data) {
+          console.log(data);
+          setSuccess(true);
+        }
+
+    } catch (error: any) {
+      setSuccess(false);
+      throw new Error(error);
+    } finally {
+      setLoading(false);
+    }
+
+    return alert(`You have successfully subscribed to our newsletter!`);
   };
 
   return (
@@ -23,8 +48,7 @@ export default function Home() {
           className="object-cover responsive-img"
           style={{ maxHeight: '200px' }}
         />
-        <div className="grid px-8 pb-6 text-gray-200 text-center">
-          <h1 className="text-3xl font-bold">Subscribe to our newsletter</h1>
+        <div className="grid px-8 pb-6 text-gray-200 space-y-3 text-center">
           <p className="text-gray-300">Get the latest news and updates from us.</p>
           <div className="grid">
             <input
@@ -35,7 +59,7 @@ export default function Home() {
             />
           </div>
           <div className="grid">
-            <button>Subscribe</button>
+            <button className="primary" onClick={subscribeToNewsletter}>Subscribe</button>
           </div>
         </div>
       </div>
