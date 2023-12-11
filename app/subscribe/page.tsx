@@ -23,8 +23,7 @@ export default function Home() {
     try {
       const { error } = await supabase
         .from('subscribers')
-        // .insert([{ email, owner_id: '' }]);
-        .insert([{ email }]);
+        .insert([{ email, owner_id: '9ac39046-cfce-4cb5-a884-d7dcbd243f52' }]);
   
       if (error) {
         console.error("Error inserting data:", error.message);
