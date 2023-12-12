@@ -6,34 +6,36 @@ import Image from "next/image";
 import { useAppContext } from "../context";
 import Button from "../components/Button";
 
-export default function Subscribe() {
+export default function Unsubscribe() {
   const { supabase } = useAppContext();
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<any>(undefined);
   const [message, setMessage] = useState<string>("");
 
-  const subscribeToNewsletter = async () => {
+  const unsubscribeToNewsletter = async () => {
     if (!isValidEmail(email)) {
       return alert(`Please enter a valid email address.`);
     }
   
     setLoading(true);
     let alertMessage = "";
+
+    // unsubscribe api
   
     try {
       const { error } = await supabase
         .from('subscribers')
-        .insert([{ email, owner_id: '8582071d-66b3-4ebd-82d4-e69683b2be8d' }])
+        .insert([{ email, owner_id: '' }])
         // .select()
   
       if (error) {
         console.error("Error inserting data:", error.message);
         setSuccess(false);
-        setMessage("You are already subscribed to our newsletter.");
+        setMessage("You are not subscribed our newsletter.");
       } else {
         setSuccess(true);
-        alertMessage = "You have successfully subscribed to our newsletter!";
+        alertMessage = "You have successfully unsubscribed to our newsletter!";
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -57,7 +59,7 @@ export default function Subscribe() {
         />
         <div className="grid px-8 pb-6 text-gray-200 space-y-3 text-center">
           {!success && <>
-            <p className="text-gray-300">Get the latest news and updates from us.</p>
+            <p className="text-gray-300">Sorry to see you go..</p>
             <div className="grid">
               <input
                 type='email'
@@ -70,14 +72,14 @@ export default function Subscribe() {
               <div className="notification">{message}</div>
             </>}
             {success == false && <>
-              <div className="notification error">Sorry, your subscription has failed!</div>
+              <div className="notification error">Sorry, your unsubscription has failed!</div>
             </>}
             <div className="grid">
-              <Button label={'Subscribe'} color="primary" loading={loading} onClick={subscribeToNewsletter} />
+              <Button label={'Unsubscribe'} color="primary" loading={loading} onClick={unsubscribeToNewsletter} />
             </div>
           </>}
           {success == true && <>
-              <div className="notification success">You have successfully subscribed!</div>
+              <div className="notification success">You have successfully unsubscribed!</div>
             </>}
         </div>
       </div>

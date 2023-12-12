@@ -6,6 +6,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-email/components": "^0.0.12",
+    "@react-email/img": "^0.0.7",
+    "@react-email/link": "^0.0.7",
+    "@react-email/text": "^0.0.7",
     "@supabase/auth-helpers-nextjs": "^0.8.7",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",

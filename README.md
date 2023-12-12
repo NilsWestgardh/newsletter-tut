@@ -13,4 +13,14 @@
 1. Create Supabase project
 2. Add keys to .env
 3. Disable user signup in Settings/Authentication
-4. Text
+4. Write RLS policies
+
+## Step 3: Create Subscribe
+
+1. Create subscribe function
+2. Create subscribe page UI
+
+## Step 4: Create Unsubscribe
+
+1. Create unsubscribe function
+2. Create unsubscribe page UI
